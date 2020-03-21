@@ -24,5 +24,36 @@
       ng-options="option for option in chartMaxResults"
       ng-model="selectedMaxResults"
     ></select>
+
+    <table>
+      <thead>
+        <th>continentName</th>
+        <th>countryName</th>
+        <th ng-show="shouldShowColumn('areaInSqKm')">areaInSqKm</th>
+        <th ng-show="shouldShowColumn('population')">population</th>
+      </thead>
+      <tbody>
+        <tr ng-repeat="country in filteredCountries()">
+          <td>{{country.continentName}}</td>
+          <td>{{country.countryName}}</td>
+          <td ng-show="shouldShowColumn('areaInSqKm')">
+            {{country.areaInSqKm}}
+          </td>
+          <td ng-show="shouldShowColumn('population')">
+            {{country.population}}
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>TOTAL</td>
+          <td ng-show="shouldShowColumn('areaInSqKm')">
+            {{totalAreaInSqKm()}}
+          </td>
+          <td ng-show="shouldShowColumn('population')">
+            {{totalPopulation()}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </body>
 </html>
