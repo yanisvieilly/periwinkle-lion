@@ -7,16 +7,16 @@ app
     "$scope",
     "CountriesService",
     ($scope, CountriesService) => {
+      $scope.metrics = [ALL, "areaInSqKm", "population"];
+      $scope.chartMaxResults = [5, 10, 15, 20];
+
+      $scope.selectedCountry = ALL;
+      $scope.selectedMetric = ALL;
+      $scope.selectedMaxResults = 5;
+
       init();
 
       function init() {
-        $scope.metrics = [ALL, "areaInSqKm", "population"];
-        $scope.chartMaxResults = [5, 10, 15, 20];
-
-        $scope.selectedCountry = ALL;
-        $scope.selectedMetric = ALL;
-        $scope.selectedMaxResults = 5;
-
         CountriesService.getCountries().then(({ geonames: countries }) => {
           $scope.countries = countries;
           $scope.countryNames = [
