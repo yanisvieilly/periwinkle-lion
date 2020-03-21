@@ -15,7 +15,7 @@ angular.module("countriesApp").controller("CountriesController", [
     $scope.selectedMetric = ALL;
     $scope.selectedMaxResults = 5;
 
-    $scope.isFirstLaunch = false;
+    $scope.isFirstLaunch = true;
 
     $scope.areaInSqKmChartConfig = {};
     $scope.populationChartConfig = {};
