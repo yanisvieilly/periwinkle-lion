@@ -83,23 +83,38 @@ app
       }
 
       function buildSeries(criterion) {
-        return $scope.filteredCountries
-          .sort((a, b) => {
-            if (parseFloat(a[criterion]) > parseFloat(b[criterion])) {
-              return -1;
-            }
+        const sortedCountries = $scope.filteredCountries.sort((a, b) => {
+          if (parseFloat(a[criterion]) > parseFloat(b[criterion])) {
+            return -1;
+          }
 
-            if (parseFloat(a[criterion]) < parseFloat(b[criterion])) {
-              return 1;
-            }
+          if (parseFloat(a[criterion]) < parseFloat(b[criterion])) {
+            return 1;
+          }
 
-            return 0;
-          })
-          .slice(0, $scope.selectedMaxResults)
-          .map(country => ({
+          return 0;
+        });
+
+        const maxResultsCountries = sortedCountries.slice(
+          0,
+          $scope.selectedMaxResults
+        );
+
+        const otherCountries = sortedCountries.slice($scope.selectedMaxResults);
+
+        return [
+          ...maxResultsCountries.map(country => ({
             name: country.countryName,
             y: parseFloat(country[criterion])
-          }));
+          })),
+          {
+            name: "Others",
+            y: otherCountries.reduce(
+              (total, country) => total + parseFloat(country[criterion]),
+              0
+            )
+          }
+        ];
       }
     }
   ])
