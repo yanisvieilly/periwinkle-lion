@@ -200,4 +200,5 @@ app
         });
       };
     }
-  ]);
+  ])
+  .directive("countriesTable", () => ({ templateUrl: "countries-table.html" }));

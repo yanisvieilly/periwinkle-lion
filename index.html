@@ -4,9 +4,9 @@
 
     <script src="http://code.highcharts.com/highcharts.js"></script>
 
-    <script src="scripts/angular.js"></script>
-    <script src="scripts/angular-resource.js"></script>
-    <script src="scripts/highcharts-ng.min.js"></script>
+    <script src="scripts/libs/angular.min.js"></script>
+    <script src="scripts/libs/angular-resource.min.js"></script>
+    <script src="scripts/libs/highcharts-ng.min.js"></script>
 
     <script src="scripts/app.js"></script>
   </head>
@@ -44,48 +44,7 @@
         config="populationChartConfig"
       ></highchart>
 
-      <table>
-        <thead>
-          <th ng-click="sortBy('continentName')">continentName</th>
-          <th ng-click="sortBy('countryName')">countryName</th>
-          <th
-            ng-click="sortBy('areaInSqKm')"
-            ng-show="shouldShowColumn('areaInSqKm')"
-          >
-            areaInSqKm
-          </th>
-          <th
-            ng-click="sortBy('population')"
-            ng-show="shouldShowColumn('population')"
-          >
-            population
-          </th>
-        </thead>
-        <tbody>
-          <tr
-            ng-repeat="country in filteredCountries | customOrderBy:sortProperty:sortOrderAsc"
-          >
-            <td>{{country.continentName}}</td>
-            <td>{{country.countryName}}</td>
-            <td ng-show="shouldShowColumn('areaInSqKm')">
-              {{country.areaInSqKm}}
-            </td>
-            <td ng-show="shouldShowColumn('population')">
-              {{country.population}}
-            </td>
-          </tr>
-          <tr>
-            <td></td>
-            <td>TOTAL</td>
-            <td ng-show="shouldShowColumn('areaInSqKm')">
-              {{totalAreaInSqKm()}}
-            </td>
-            <td ng-show="shouldShowColumn('population')">
-              {{totalPopulation()}}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <countries-table></countries-table>
     </div>
   </body>
 </html>
