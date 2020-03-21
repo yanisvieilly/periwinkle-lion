@@ -8,6 +8,7 @@ app
     "CountriesService",
     ($scope, CountriesService) => {
       $scope.countries = [];
+      $scope.filteredCountries = [];
 
       $scope.continentNames = [ALL];
       $scope.metrics = [ALL, "areaInSqKm", "population"];
@@ -18,10 +19,10 @@ app
       $scope.selectedMaxResults = 5;
 
       $scope.shouldShowColumn = shouldShowColumn;
-      $scope.filteredCountries = filteredCountries;
       $scope.totalAreaInSqKm = totalAreaInSqKm;
       $scope.totalPopulation = totalPopulation;
       $scope.buildChartConfig = buildChartConfig;
+      $scope.filterCountries = filterCountries;
 
       init();
 
@@ -30,6 +31,8 @@ app
           $scope.countries = countries.sort((a, b) =>
             a.countryName.localeCompare(b.countryName)
           );
+          $scope.filteredCountries = $scope.countries;
+
           $scope.continentNames = [
             ALL,
             ...new Set(countries.map(({ continentName }) => continentName))
@@ -41,21 +44,22 @@ app
         return [ALL, column].includes($scope.selectedMetric);
       }
 
-      function filteredCountries() {
-        return $scope.countries.filter(({ continentName }) =>
-          [ALL, continentName].includes($scope.selectedContinent)
+      function filterCountries() {
+        $scope.filteredCountries = $scope.countries.filter(
+          ({ continentName }) =>
+            [ALL, continentName].includes($scope.selectedContinent)
         );
       }
 
       function totalAreaInSqKm() {
-        return filteredCountries().reduce(
+        return $scope.filteredCountries.reduce(
           (total, { areaInSqKm }) => total + parseFloat(areaInSqKm),
           0
         );
       }
 
       function totalPopulation() {
-        return filteredCountries().reduce(
+        return $scope.filteredCountries.reduce(
           (total, { population }) => total + parseInt(population, 10),
           0
         );
@@ -79,7 +83,7 @@ app
       }
 
       function buildSeries(criterion) {
-        return filteredCountries()
+        return $scope.filteredCountries
           .sort((a, b) => {
             if (parseFloat(a[criterion]) > parseFloat(b[criterion])) {
               return -1;
