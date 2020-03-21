@@ -1,0 +1,31 @@
+body {
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  text-align: center;
+}
+
+.charts {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 4rem;
+}
+
+.countries-table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin: auto;
+  margin-top: 4rem;
+}
+
+.countries-table tr:nth-child(even) {
+  background-color: #eee;
+}
+
+.countries-table tbody tr:hover {
+  background-color: #ddd;
+}
+
+.countries-table th,
+.countries-table td {
+  border: 0.0625rem solid #ddd;
+  padding: 0.5rem;
+}

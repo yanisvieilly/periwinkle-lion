@@ -2,6 +2,8 @@
   <head>
     <title>Hydrane AngularJS Frontend Dev CS</title>
 
+    <link rel="stylesheet" href="css/app.css" />
+
     <script src="scripts/libs/angular.min.js"></script>
     <script src="scripts/libs/angular-resource.min.js"></script>
     <script src="scripts/libs/highcharts.js"></script>
@@ -37,15 +39,17 @@
     <button ng-click="clickGo()">Go</button>
 
     <div ng-hide="isFirstLaunch">
-      <highchart
-        ng-show="shouldShowColumn('areaInSqKm')"
-        config="areaInSqKmChartConfig"
-      ></highchart>
+      <div class="charts">
+        <highchart
+          ng-show="shouldShowColumn('areaInSqKm')"
+          config="areaInSqKmChartConfig"
+        ></highchart>
 
-      <highchart
-        ng-show="shouldShowColumn('population')"
-        config="populationChartConfig"
-      ></highchart>
+        <highchart
+          ng-show="shouldShowColumn('population')"
+          config="populationChartConfig"
+        ></highchart>
+      </div>
 
       <countries-table></countries-table>
     </div>
