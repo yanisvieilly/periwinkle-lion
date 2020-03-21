@@ -1,6 +1,6 @@
 const ALL = "ALL";
 
-const app = angular.module("countriesApp", ["ngResource"]);
+const app = angular.module("countriesApp", ["ngResource", "highcharts-ng"]);
 
 app
   .controller("CountriesController", [
@@ -21,6 +21,7 @@ app
       $scope.filteredCountries = filteredCountries;
       $scope.totalAreaInSqKm = totalAreaInSqKm;
       $scope.totalPopulation = totalPopulation;
+      $scope.buildChartConfig = buildChartConfig;
 
       init();
 
@@ -58,6 +59,43 @@ app
           (total, { population }) => total + parseInt(population, 10),
           0
         );
+      }
+
+      function buildChartConfig(name) {
+        return {
+          chart: {
+            type: "pie"
+          },
+          title: {
+            text: name
+          },
+          series: [
+            {
+              name,
+              data: buildSeries(name)
+            }
+          ]
+        };
+      }
+
+      function buildSeries(criterion) {
+        return filteredCountries()
+          .sort((a, b) => {
+            if (parseFloat(a[criterion]) > parseFloat(b[criterion])) {
+              return -1;
+            }
+
+            if (parseFloat(a[criterion]) < parseFloat(b[criterion])) {
+              return 1;
+            }
+
+            return 0;
+          })
+          .slice(0, $scope.selectedMaxResults)
+          .map(country => ({
+            name: country.countryName,
+            y: parseFloat(country[criterion])
+          }));
       }
     }
   ])

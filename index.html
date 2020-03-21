@@ -2,8 +2,12 @@
   <head>
     <title>Hydrane AngularJS Frontend Dev CS</title>
 
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+
     <script src="scripts/angular.js"></script>
     <script src="scripts/angular-resource.js"></script>
+    <script src="scripts/highcharts-ng.min.js"></script>
+
     <script src="scripts/app.js"></script>
   </head>
 
@@ -24,6 +28,16 @@
       ng-options="option for option in chartMaxResults"
       ng-model="selectedMaxResults"
     ></select>
+
+    <highchart
+      ng-show="shouldShowColumn('areaInSqKm')"
+      config="buildChartConfig('areaInSqKm')"
+    ></highchart>
+
+    <highchart
+      ng-show="shouldShowColumn('population')"
+      config="buildChartConfig('population')"
+    ></highchart>
 
     <table>
       <thead>
