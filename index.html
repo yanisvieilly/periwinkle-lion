@@ -46,13 +46,25 @@
 
       <table>
         <thead>
-          <th>continentName</th>
-          <th>countryName</th>
-          <th ng-show="shouldShowColumn('areaInSqKm')">areaInSqKm</th>
-          <th ng-show="shouldShowColumn('population')">population</th>
+          <th ng-click="sortBy('continentName')">continentName</th>
+          <th ng-click="sortBy('countryName')">countryName</th>
+          <th
+            ng-click="sortBy('areaInSqKm')"
+            ng-show="shouldShowColumn('areaInSqKm')"
+          >
+            areaInSqKm
+          </th>
+          <th
+            ng-click="sortBy('population')"
+            ng-show="shouldShowColumn('population')"
+          >
+            population
+          </th>
         </thead>
         <tbody>
-          <tr ng-repeat="country in filteredCountries">
+          <tr
+            ng-repeat="country in filteredCountries | customOrderBy:sortProperty:sortOrderAsc"
+          >
             <td>{{country.continentName}}</td>
             <td>{{country.countryName}}</td>
             <td ng-show="shouldShowColumn('areaInSqKm')">

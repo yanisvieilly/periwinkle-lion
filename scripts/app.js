@@ -23,6 +23,9 @@ app
       $scope.areaInSqKmChartConfig = {};
       $scope.populationChartConfig = {};
 
+      $scope.sortProperty = "countryName";
+      $scope.sortOrderAsc = true;
+
       $scope.shouldShowColumn = shouldShowColumn;
       $scope.totalAreaInSqKm = totalAreaInSqKm;
       $scope.totalPopulation = totalPopulation;
@@ -30,6 +33,7 @@ app
       $scope.selectContinent = selectContinent;
       $scope.changeMaxResults = changeMaxResults;
       $scope.clickGo = clickGo;
+      $scope.sortBy = sortBy;
 
       init();
 
@@ -53,6 +57,15 @@ app
         init().then(() => {
           $scope.isFirstLaunch = false;
         });
+      }
+
+      function sortBy(criterion) {
+        if ($scope.sortProperty === criterion) {
+          $scope.sortOrderAsc = !$scope.sortOrderAsc;
+        } else {
+          $scope.sortProperty = criterion;
+          $scope.sortOrderAsc = true;
+        }
       }
 
       function sortCountries(countries) {
@@ -165,4 +178,26 @@ app
         return Country.list().$promise;
       }
     })
+  ])
+  .filter("customOrderBy", [
+    "orderByFilter",
+    orderBy => {
+      return function(countries, sortProperty, sortOrderAsc) {
+        if (["continentName", "countryName"].includes(sortProperty)) {
+          return orderBy(countries, sortProperty, !sortOrderAsc);
+        }
+
+        return countries.sort((a, b) => {
+          if (parseFloat(a[sortProperty]) > parseFloat(b[sortProperty])) {
+            return sortOrderAsc ? -1 : 1;
+          }
+
+          if (parseFloat(a[sortProperty]) < parseFloat(b[sortProperty])) {
+            return sortOrderAsc ? 1 : -1;
+          }
+
+          return 0;
+        });
+      };
+    }
   ]);
