@@ -28,6 +28,7 @@
     <select
       ng-options="option for option in chartMaxResults"
       ng-model="selectedMaxResults"
+      ng-change="changeMaxResults()"
     ></select>
 
     <highchart

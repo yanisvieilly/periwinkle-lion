@@ -18,11 +18,15 @@ app
       $scope.selectedMetric = ALL;
       $scope.selectedMaxResults = 5;
 
+      $scope.areaInSqKmChartConfig = {};
+      $scope.populationChartConfig = {};
+
       $scope.shouldShowColumn = shouldShowColumn;
       $scope.totalAreaInSqKm = totalAreaInSqKm;
       $scope.totalPopulation = totalPopulation;
       $scope.buildChartConfig = buildChartConfig;
       $scope.filterCountries = filterCountries;
+      $scope.changeMaxResults = changeMaxResults;
 
       init();
 
@@ -37,6 +41,8 @@ app
             ALL,
             ...new Set(countries.map(({ continentName }) => continentName))
           ];
+
+          changeMaxResults();
         });
       }
 
@@ -49,6 +55,11 @@ app
           ({ continentName }) =>
             [ALL, continentName].includes($scope.selectedContinent)
         );
+      }
+
+      function changeMaxResults() {
+        $scope.areaInSqKmChartConfig = buildChartConfig("areaInSqKm");
+        $scope.populationChartConfig = buildChartConfig("population");
       }
 
       function totalAreaInSqKm() {
