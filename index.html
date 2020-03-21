@@ -9,5 +9,10 @@
 
   <body ng-controller="CountriesController">
     <h1>Hydrane AngularJS Frontend Dev CS</h1>
+
+    <select
+      ng-options="option for option in countryNames"
+      ng-model="selectedCountry"
+    ></select>
   </body>
 </html>
