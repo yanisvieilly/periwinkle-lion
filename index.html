@@ -17,7 +17,7 @@
     <select
       ng-options="option for option in continentNames"
       ng-model="selectedContinent"
-      ng-change="filterCountries()"
+      ng-change="selectContinent()"
     ></select>
 
     <select
@@ -31,45 +31,49 @@
       ng-change="changeMaxResults()"
     ></select>
 
-    <highchart
-      ng-show="shouldShowColumn('areaInSqKm')"
-      config="areaInSqKmChartConfig"
-    ></highchart>
+    <button ng-click="clickGo()">Go</button>
 
-    <highchart
-      ng-show="shouldShowColumn('population')"
-      config="populationChartConfig"
-    ></highchart>
+    <div ng-hide="isFirstLaunch">
+      <highchart
+        ng-show="shouldShowColumn('areaInSqKm')"
+        config="areaInSqKmChartConfig"
+      ></highchart>
 
-    <table>
-      <thead>
-        <th>continentName</th>
-        <th>countryName</th>
-        <th ng-show="shouldShowColumn('areaInSqKm')">areaInSqKm</th>
-        <th ng-show="shouldShowColumn('population')">population</th>
-      </thead>
-      <tbody>
-        <tr ng-repeat="country in filteredCountries">
-          <td>{{country.continentName}}</td>
-          <td>{{country.countryName}}</td>
-          <td ng-show="shouldShowColumn('areaInSqKm')">
-            {{country.areaInSqKm}}
-          </td>
-          <td ng-show="shouldShowColumn('population')">
-            {{country.population}}
-          </td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>TOTAL</td>
-          <td ng-show="shouldShowColumn('areaInSqKm')">
-            {{totalAreaInSqKm()}}
-          </td>
-          <td ng-show="shouldShowColumn('population')">
-            {{totalPopulation()}}
-          </td>
-        </tr>
-      </tbody>
-    </table>
+      <highchart
+        ng-show="shouldShowColumn('population')"
+        config="populationChartConfig"
+      ></highchart>
+
+      <table>
+        <thead>
+          <th>continentName</th>
+          <th>countryName</th>
+          <th ng-show="shouldShowColumn('areaInSqKm')">areaInSqKm</th>
+          <th ng-show="shouldShowColumn('population')">population</th>
+        </thead>
+        <tbody>
+          <tr ng-repeat="country in filteredCountries">
+            <td>{{country.continentName}}</td>
+            <td>{{country.countryName}}</td>
+            <td ng-show="shouldShowColumn('areaInSqKm')">
+              {{country.areaInSqKm}}
+            </td>
+            <td ng-show="shouldShowColumn('population')">
+              {{country.population}}
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>TOTAL</td>
+            <td ng-show="shouldShowColumn('areaInSqKm')">
+              {{totalAreaInSqKm()}}
+            </td>
+            <td ng-show="shouldShowColumn('population')">
+              {{totalPopulation()}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </body>
 </html>

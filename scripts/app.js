@@ -18,6 +18,8 @@ app
       $scope.selectedMetric = ALL;
       $scope.selectedMaxResults = 5;
 
+      $scope.isFirstLaunch = true;
+
       $scope.areaInSqKmChartConfig = {};
       $scope.populationChartConfig = {};
 
@@ -25,29 +27,47 @@ app
       $scope.totalAreaInSqKm = totalAreaInSqKm;
       $scope.totalPopulation = totalPopulation;
       $scope.buildChartConfig = buildChartConfig;
-      $scope.filterCountries = filterCountries;
+      $scope.selectContinent = selectContinent;
       $scope.changeMaxResults = changeMaxResults;
+      $scope.clickGo = clickGo;
 
       init();
 
       function init() {
-        CountriesService.getCountries().then(({ geonames: countries }) => {
-          $scope.countries = countries.sort((a, b) =>
-            a.countryName.localeCompare(b.countryName)
-          );
-          $scope.filteredCountries = $scope.countries;
+        return CountriesService.getCountries().then(
+          ({ geonames: countries }) => {
+            sortCountries(countries);
+            filterCountries();
 
-          $scope.continentNames = [
-            ALL,
-            ...new Set(countries.map(({ continentName }) => continentName))
-          ];
+            $scope.continentNames = [
+              ALL,
+              ...new Set(countries.map(({ continentName }) => continentName))
+            ];
 
-          changeMaxResults();
+            changeMaxResults();
+          }
+        );
+      }
+
+      function clickGo() {
+        init().then(() => {
+          $scope.isFirstLaunch = false;
         });
+      }
+
+      function sortCountries(countries) {
+        $scope.countries = countries.sort((a, b) =>
+          a.countryName.localeCompare(b.countryName)
+        );
       }
 
       function shouldShowColumn(column) {
         return [ALL, column].includes($scope.selectedMetric);
+      }
+
+      function selectContinent() {
+        filterCountries();
+        changeMaxResults();
       }
 
       function filterCountries() {
