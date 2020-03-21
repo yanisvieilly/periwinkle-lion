@@ -10,7 +10,7 @@ app
       $scope.metrics = [ALL, "areaInSqKm", "population"];
       $scope.chartMaxResults = [5, 10, 15, 20];
 
-      $scope.selectedCountry = ALL;
+      $scope.selectedContinent = ALL;
       $scope.selectedMetric = ALL;
       $scope.selectedMaxResults = 5;
 
@@ -19,9 +19,9 @@ app
       function init() {
         CountriesService.getCountries().then(({ geonames: countries }) => {
           $scope.countries = countries;
-          $scope.countryNames = [
+          $scope.continentNames = [
             ALL,
-            ...new Set(countries.map(({ countryName }) => countryName).sort())
+            ...new Set(countries.map(({ continentName }) => continentName).sort())
           ];
         });
       }
