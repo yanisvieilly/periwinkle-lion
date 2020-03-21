@@ -1,4 +1,4 @@
-const ALL_COUNTRIES = "ALL";
+const ALL = "ALL";
 
 const app = angular.module("countriesApp", ["ngResource"]);
 
@@ -10,12 +10,17 @@ app
       init();
 
       function init() {
-        $scope.selectedCountry = ALL_COUNTRIES;
+        $scope.metrics = [ALL, "areaInSqKm", "population"];
+        $scope.chartMaxResults = [5, 10, 15, 20];
+
+        $scope.selectedCountry = ALL;
+        $scope.selectedMetric = ALL;
+        $scope.selectedMaxResults = 5;
 
         CountriesService.getCountries().then(({ geonames: countries }) => {
           $scope.countries = countries;
           $scope.countryNames = [
-            ALL_COUNTRIES,
+            ALL,
             ...new Set(countries.map(({ countryName }) => countryName).sort())
           ];
         });
