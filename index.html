@@ -33,12 +33,12 @@
 
     <highchart
       ng-show="shouldShowColumn('areaInSqKm')"
-      config="buildChartConfig('areaInSqKm')"
+      config="areaInSqKmChartConfig"
     ></highchart>
 
     <highchart
       ng-show="shouldShowColumn('population')"
-      config="buildChartConfig('population')"
+      config="populationChartConfig"
     ></highchart>
 
     <table>
